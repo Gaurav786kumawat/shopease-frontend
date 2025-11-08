@@ -1,0 +1,32 @@
+# System / Editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Node / tooling
+node_modules/
+dist/
+build/
+.cache/
+npm-debug.log*
+yarn-error.log*
+
+# OS files
+*.swp
+*.swo
+
+# Local env
+.env
+.env.local
+
+# Mac
+.DS_Store
+
+# Netlify / Vercel caches
+.vercel/
+.netlify/
+
+# Logs
+logs
+*.log
