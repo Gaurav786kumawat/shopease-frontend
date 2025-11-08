@@ -1,0 +1,314 @@
+/* responsive.css */
+/* Mobile-first overrides and pixel-perfect tweaks
+   These rules are intentionally small and focused on stacking and touch-friendly sizes.
+*/
+
+@media (max-width: 575.98px) {
+
+    /* Make search bar full-width on small screens */
+    .navbar .form-control {
+        min-width: unset;
+        width: 100%
+    }
+
+    .navbar .search-form {
+        padding: 0 0.5rem
+    }
+
+    #hero .carousel-inner {
+        height: 260px
+    }
+
+    #hero .carousel-item img {
+        height: 260px
+    }
+
+    #hero .display-5 {
+        font-size: 1.25rem
+    }
+
+    .category-tile {
+        height: 120px
+    }
+
+    .pcard__title {
+        font-size: 0.9rem
+    }
+
+    .pcard__img {
+        padding-top: 70%
+    }
+}
+
+@media (min-width: 576px) and (max-width: 991.98px) {
+    #hero .carousel-inner {
+        height: 360px
+    }
+
+    #hero .carousel-item img {
+        height: 360px
+    }
+
+    .category-tile {
+        height: 160px
+    }
+
+    .navbar .form-control {
+        min-width: 260px
+    }
+}
+
+/* Pixel perfect spacing adjustments for medium screens */
+@media (min-width: 992px) and (max-width:1199.98px) {
+    .container {
+        max-width: 980px
+    }
+}
+
+/* Touch targets */
+.btn,
+.form-control,
+.navbar-toggler {
+    touch-action: manipulation
+}
+
+/* Category Page */
+/* responsive.css */
+/* Category-specific responsive tweaks (append to css/responsive.css) */
+
+@media (max-width: 767.98px) {
+    aside.col-lg-3 {
+        display: none !important;
+    }
+
+    #categoryGrid .col-6 {
+        padding-left: 0.5rem;
+        padding-right: 0.5rem
+    }
+
+    .pcard__img {
+        padding-top: 72%
+    }
+
+    /* slightly taller on phones */
+    .pagination {
+        font-size: 0.9rem;
+    }
+}
+
+@media (min-width: 992px) {
+
+    /* Slightly larger product images on large displays */
+    #categoryGrid .pcard__img {
+        padding-top: 78%
+    }
+}
+
+
+/* responsive.css */
+/* Product page specific responsive tweaks (append to css/responsive.css) */
+
+@media (min-width: 992px) {
+
+    /* Slightly larger thumbnails on wide screens */
+    #prodThumbs img {
+        width: 96px;
+        height: 96px;
+    }
+
+    #zoomWrapper {
+        min-height: 480px;
+    }
+}
+
+@media (max-width: 1199.98px) and (min-width: 768px) {
+    #zoomWrapper {
+        min-height: 380px;
+    }
+}
+
+/* responsive.css */
+/* CART PAGE RESPONSIVE ADDITIONS */
+
+@media (max-width: 991.98px) {
+    aside.col-lg-4 {
+        position: static !important;
+        margin-top: 1.5rem;
+    }
+
+    #cartItemsList {
+        max-height: none;
+    }
+
+    #cartItemsList .d-flex {
+        flex-wrap: wrap;
+        text-align: center;
+    }
+
+    #cartItemsList img {
+        width: 100%;
+        max-width: 120px;
+        margin: auto;
+    }
+
+    #cartItemsList .flex-grow-1 {
+        width: 100%;
+        margin-top: 0.5rem;
+    }
+
+    #cartItemsList .text-end {
+        width: 100%;
+        text-align: center !important;
+        margin-top: 0.5rem;
+    }
+}
+
+@media (max-width: 575.98px) {
+    main h2 {
+        font-size: 1.4rem;
+    }
+
+    #applyCouponBtn {
+        width: 100%;
+    }
+
+    #couponInput {
+        width: 100%;
+    }
+}
+
+/* responsive.css */
+/* CHECKOUT PAGE RESPONSIVE ADDITIONS — append to css/responsive.css */
+
+@media (max-width: 991.98px) {
+    aside.col-lg-4 {
+        position: static !important;
+        top: auto !important;
+    }
+
+    .checkout .card {
+        padding: 1rem;
+    }
+
+    #orderConfirm {
+        padding: 1rem;
+    }
+}
+
+@media (max-width: 575.98px) {
+    #orderConfirm img {
+        width: 140px;
+        height: 140px;
+    }
+
+    .checkout h5 {
+        font-size: 1rem;
+    }
+
+    .checkout .btn-primary {
+        width: 100%;
+        padding: 0.85rem;
+    }
+}
+
+/* responsive.css */
+/* ACCOUNT PAGE RESPONSIVE TWEAKS */
+
+@media (max-width: 991.98px) {
+    .account-page .row {
+        flex-direction: column;
+    }
+
+    .account-page aside {
+        order: 1;
+        margin-bottom: 1rem;
+    }
+
+    .account-page section {
+        order: 2;
+    }
+
+    .list-group-item {
+        text-align: center;
+    }
+
+    .account-section {
+        padding: 1.5rem !important;
+    }
+}
+
+@media (max-width: 575.98px) {
+    .account-page h2 {
+        font-size: 1.4rem;
+    }
+
+    #wishlistItems .col-md-4 {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+
+    .account-section h5 {
+        font-size: 1rem;
+    }
+
+    #profileForm .btn {
+        width: 100%;
+        margin-bottom: 0.5rem;
+    }
+}
+
+/* responsive.css */
+/* SEARCH PAGE RESPONSIVE POLISH */
+
+@media (max-width: 1199.98px) {
+    #resultsGrid .col-md-3 {
+        flex: 0 0 25%;
+        max-width: 25%;
+    }
+}
+
+@media (max-width: 991.98px) {
+    #resultsGrid .col-md-3 {
+        flex: 0 0 33.333%;
+        max-width: 33.333%;
+    }
+
+    #sortSelect {
+        width: 100%;
+    }
+}
+
+@media (max-width: 767.98px) {
+    #resultsGrid .col-md-3 {
+        flex: 0 0 50%;
+        max-width: 50%;
+    }
+
+    main h2 {
+        font-size: 1.4rem;
+    }
+
+    #searchTerm {
+        display: block;
+        margin-top: 4px;
+    }
+
+    #filterCanvas {
+        width: 80%;
+    }
+}
+
+@media (max-width: 575.98px) {
+    #resultsGrid .col-md-3 {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+
+    #sortSelect {
+        width: 100%;
+    }
+
+    #loadMoreBtn {
+        width: 100%;
+    }
+}

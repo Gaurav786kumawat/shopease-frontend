@@ -1,0 +1,247 @@
+<!-- cart.html -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ShopEase — Your Cart</title>
+    <meta name="description" content="View your cart, update quantities, and proceed to checkout.">
+
+    <!-- Bootstrap & Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Shared CSS -->
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/responsive.css">
+</head>
+
+<body>
+    <!-- NAVBAR -->
+    <header class="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top">
+        <div class="container py-2">
+            <a class="navbar-brand fw-bold fs-3" href="index.html">ShopEase</a>
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCart"
+                aria-controls="navbarCart" aria-expanded="false" aria-label="Toggle navigation">
+                <i class="bi bi-list fs-2"></i>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarCart">
+                <ul class="navbar-nav ms-auto align-items-center">
+                    <li class="nav-item"><a href="account.html" class="nav-link"><i
+                                class="bi bi-person-circle me-1"></i>Account</a></li>
+                    <li class="nav-item">
+                        <a href="index.html" class="nav-link"><i class="bi bi-house me-1"></i>Continue Shopping</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </header>
+
+    <!-- MAIN CART -->
+    <main class="container my-5">
+        <h2 class="fw-semibold mb-4">Your Shopping Cart</h2>
+
+        <!-- Cart layout -->
+        <div class="row g-4">
+            <!-- Cart items -->
+            <div class="col-lg-8">
+                <div class="card border-0 shadow-sm rounded-4 p-3">
+                    <div id="cartItemsList" class="vstack gap-3">
+                        <!-- JS will inject cart items -->
+                    </div>
+                </div>
+
+                <!-- Coupon section -->
+                <div class="card border-0 shadow-sm rounded-4 p-3 mt-3">
+                    <div class="d-flex flex-wrap gap-3 align-items-center">
+                        <input type="text" id="couponInput" class="form-control flex-grow-1"
+                            placeholder="Have a coupon? Enter here..." aria-label="Enter coupon code">
+                        <button class="btn btn-primary rounded-pill" id="applyCouponBtn">Apply</button>
+                    </div>
+                    <small id="couponFeedback" class="text-success d-block mt-2" style="display:none;"></small>
+                </div>
+            </div>
+
+            <!-- Summary -->
+            <aside class="col-lg-4">
+                <div class="card border-0 shadow-sm rounded-4 p-3 position-sticky" style="top:90px">
+                    <h5 class="fw-semibold mb-3">Order Summary</h5>
+                    <div class="d-flex justify-content-between mb-2">
+                        <span>Subtotal</span><span id="subtotal">₹0</span>
+                    </div>
+                    <div class="d-flex justify-content-between mb-2">
+                        <span>Discount</span><span id="discount">- ₹0</span>
+                    </div>
+                    <div class="d-flex justify-content-between mb-2">
+                        <span>Shipping</span><span id="shipping">₹40</span>
+                    </div>
+                    <hr>
+                    <div class="d-flex justify-content-between fw-bold mb-3">
+                        <span>Total</span><span id="grandTotal">₹0</span>
+                    </div>
+                    <a href="checkout.html" class="btn btn-primary w-100 rounded-pill py-2 fw-semibold">Proceed to
+                        Checkout</a>
+                </div>
+            </aside>
+        </div>
+
+        <!-- Empty cart state -->
+        <div id="emptyCart" class="text-center py-5 d-none">
+            <img src="https://images.unsplash.com/photo-1607083206968-13611e3d76d3?auto=format&fit=crop&w=600&q=80"
+                alt="Empty cart" class="rounded-4 mb-3" width="240" height="240" loading="lazy">
+            <h4 class="fw-semibold">Your cart is empty</h4>
+            <p class="text-muted mb-3">Looks like you haven't added anything yet.</p>
+            <a href="index.html" class="btn btn-outline-primary rounded-pill">Start Shopping</a>
+        </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-dark text-light py-4 mt-5">
+        <div class="container text-center small">
+            <p class="mb-1">&copy; 2025 ShopEase — All rights reserved.</p>
+            <p class="mb-0">Images: Unsplash — credited in data.js.</p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap & Script -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/data.js"></script>
+    <script src="js/script.js"></script>
+
+    <!-- Page-specific JS -->
+    <script>
+        (function () {
+            'use strict';
+            const cartList = document.getElementById('cartItemsList');
+            const emptyCart = document.getElementById('emptyCart');
+            const subtotalEl = document.getElementById('subtotal');
+            const discountEl = document.getElementById('discount');
+            const shippingEl = document.getElementById('shipping');
+            const grandTotalEl = document.getElementById('grandTotal');
+            const couponInput = document.getElementById('couponInput');
+            const couponFeedback = document.getElementById('couponFeedback');
+
+            const Utils = window.ShopApp && window.ShopApp.Utils ? window.ShopApp.Utils : {
+                formatCurrency: v => '₹' + (Number(v) || 0).toLocaleString('en-IN')
+            };
+
+            const cart = JSON.parse(localStorage.getItem('shop_cart') || '[]');
+            const products = window.products || [];
+            let appliedCoupon = null;
+
+            function renderCart() {
+                if (!cart.length) {
+                    emptyCart.classList.remove('d-none');
+                    cartList.innerHTML = '';
+                    document.querySelector('aside')?.classList.add('d-none');
+                    return;
+                } else {
+                    emptyCart.classList.add('d-none');
+                    document.querySelector('aside')?.classList.remove('d-none');
+                }
+
+                cartList.innerHTML = '';
+                let subtotal = 0;
+
+                cart.forEach(item => {
+                    const p = products.find(pr => pr.id === item.id);
+                    if (!p) return;
+                    const price = p.price * item.qty;
+                    subtotal += price;
+
+                    const div = document.createElement('div');
+                    div.className = 'd-flex gap-3 align-items-center border-bottom pb-3';
+                    div.innerHTML = `
+            <div class="flex-shrink-0">
+              <img src="${p.images?.[0] || 'https://via.placeholder.com/100'}" alt="${p.title}" class="rounded-3" width="90" height="90" style="object-fit:cover;">
+            </div>
+            <div class="flex-grow-1">
+              <h6 class="fw-semibold mb-1">${p.title}</h6>
+              <small class="text-muted">${p.brand || ''}</small>
+              <div class="d-flex align-items-center gap-2 mt-2">
+                <button class="btn btn-outline-secondary btn-sm qty-minus" data-id="${p.id}">-</button>
+                <span class="fw-semibold">${item.qty}</span>
+                <button class="btn btn-outline-secondary btn-sm qty-plus" data-id="${p.id}">+</button>
+              </div>
+            </div>
+            <div class="text-end">
+              <div class="fw-semibold">${Utils.formatCurrency(price)}</div>
+              <button class="btn btn-sm text-danger mt-1 remove-item" data-id="${p.id}"><i class="bi bi-trash"></i></button>
+            </div>
+          `;
+                    cartList.appendChild(div);
+                });
+
+                subtotalEl.textContent = Utils.formatCurrency(subtotal);
+                updateTotals(subtotal);
+                bindEvents();
+            }
+
+            function updateTotals(subtotal) {
+                let discountAmt = 0;
+                if (appliedCoupon === 'SAVE10') discountAmt = subtotal * 0.1;
+                const shipping = subtotal > 500 ? 0 : 40;
+                const total = subtotal - discountAmt + shipping;
+                discountEl.textContent = '- ' + Utils.formatCurrency(discountAmt);
+                shippingEl.textContent = Utils.formatCurrency(shipping);
+                grandTotalEl.textContent = Utils.formatCurrency(total);
+            }
+
+            function bindEvents() {
+                document.querySelectorAll('.qty-plus').forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        const id = btn.dataset.id;
+                        const item = cart.find(i => i.id === id);
+                        item.qty++;
+                        localStorage.setItem('shop_cart', JSON.stringify(cart));
+                        renderCart();
+                    });
+                });
+                document.querySelectorAll('.qty-minus').forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        const id = btn.dataset.id;
+                        const item = cart.find(i => i.id === id);
+                        if (item.qty > 1) item.qty--;
+                        else cart.splice(cart.indexOf(item), 1);
+                        localStorage.setItem('shop_cart', JSON.stringify(cart));
+                        renderCart();
+                    });
+                });
+                document.querySelectorAll('.remove-item').forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        const id = btn.dataset.id;
+                        const index = cart.findIndex(i => i.id === id);
+                        if (index > -1) cart.splice(index, 1);
+                        localStorage.setItem('shop_cart', JSON.stringify(cart));
+                        renderCart();
+                    });
+                });
+            }
+
+            document.getElementById('applyCouponBtn').addEventListener('click', () => {
+                const code = couponInput.value.trim().toUpperCase();
+                if (code === 'SAVE10') {
+                    appliedCoupon = 'SAVE10';
+                    couponFeedback.textContent = 'Coupon applied! You saved 10% 🎉';
+                    couponFeedback.style.display = 'block';
+                } else {
+                    appliedCoupon = null;
+                    couponFeedback.textContent = 'Invalid coupon code.';
+                    couponFeedback.style.color = 'red';
+                    couponFeedback.style.display = 'block';
+                }
+                renderCart();
+            });
+
+            renderCart();
+        })();
+    </script>
+    <script src="js/cart.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,1158 @@
+/* styles.css */
+/* Shared styles for the ShopEase demo
+   - Contains design tokens, product card styles, hero adjustments, and utilities.
+   - Notes: Keep this file shared across pages (index.html, category.html, etc.)
+*/
+
+/* -------------------------
+   Design tokens
+   ------------------------- */
+:root {
+    --font-sans: 'Poppins', system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    --bg: #ffffff;
+    --muted: #6c757d;
+    --text: #1b1b1b;
+    --accent: #0066ff;
+    /* primary accent */
+    --success: #198754;
+    --danger: #dc3545;
+    --card-radius: 12px;
+    --shadow-sm: 0 1px 6px rgba(16, 24, 40, 0.06);
+    --shadow-md: 0 6px 18px rgba(16, 24, 40, 0.08);
+    --transition: 200ms ease;
+}
+
+/* -------------------------
+   Base
+   ------------------------- */
+* {
+    box-sizing: border-box
+}
+
+html,
+body {
+    height: 100%
+}
+
+body {
+    font-family: var(--font-sans);
+    background: var(--bg);
+    color: var(--text);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    line-height: 1.4;
+    font-size: 16px;
+}
+
+/* Keep focus outlines for accessibility */
+:focus {
+    outline: 3px solid rgba(0, 102, 255, 0.15);
+    outline-offset: 2px
+}
+
+/* Utility */
+.section-title {
+    font-size: 1.125rem;
+    color: var(--text);
+}
+
+.container {
+    max-width: 1200px
+}
+
+/* -------------------------
+   Navbar
+   ------------------------- */
+.navbar-brand {
+    color: var(--text)
+}
+
+.navbar .form-control {
+    min-width: 360px;
+    max-width: 720px
+}
+
+.navbar .btn-primary {
+    background: var(--accent);
+    border: 0
+}
+
+.navbar .btn-primary:focus {
+    box-shadow: 0 0 0 0.2rem rgba(0, 102, 255, 0.18)
+}
+
+/* -------------------------
+   Hero carousel
+   ------------------------- */
+#hero .carousel-inner {
+    height: 420px
+}
+
+#hero .carousel-item img {
+    height: 420px;
+    object-fit: cover
+}
+
+#hero .carousel-caption {
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.45));
+    padding: 2.5rem;
+}
+
+#hero .display-5 {
+    letter-spacing: -0.02em;
+    text-shadow: 0 6px 18px rgba(0, 0, 0, 0.5)
+}
+
+/* -------------------------
+   Category tiles
+   ------------------------- */
+.category-tile {
+    height: 180px
+}
+
+.category-tile img {
+    height: 100%;
+    object-fit: cover
+}
+
+.category-tile .overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(0deg, rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.05));
+    transition: var(--transition);
+}
+
+.category-tile .overlay a {
+    color: var(--text)
+}
+
+.category-tile:hover .overlay {
+    background: linear-gradient(0deg, rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.05));
+    transform: translateY(-4px)
+}
+
+/* -------------------------
+   Product Card
+   ------------------------- */
+.pcard {
+    background: #fff;
+    border-radius: var(--card-radius);
+    box-shadow: var(--shadow-sm);
+    overflow: hidden;
+    transition: transform var(--transition), box-shadow var(--transition);
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.pcard:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--shadow-md)
+}
+
+.pcard__img {
+    position: relative;
+    padding-top: 80%;
+    overflow: hidden;
+    /* aspect ratio */
+}
+
+.pcard__img img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover
+}
+
+.pcard__body {
+    padding: 0.85rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    flex: 1
+}
+
+.pcard__title {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--text);
+    min-height: 2.4rem
+}
+
+.pcard__brand {
+    font-size: 0.8rem;
+    color: var(--muted)
+}
+
+.pcard__price {
+    font-weight: 700;
+    font-size: 1rem
+}
+
+.pcard__mrp {
+    font-size: 0.85rem;
+    color: var(--muted);
+    text-decoration: line-through;
+    margin-left: 0.5rem
+}
+
+.pcard__meta {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.875rem
+}
+
+.pcard__actions {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: auto
+}
+
+.pcard .btn {
+    flex: 1
+}
+
+/* discount badge */
+.pcard__badge {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: var(--accent);
+    color: #fff;
+    padding: 0.25rem 0.5rem;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.8rem;
+}
+
+/* rating */
+.rating {
+    display: inline-flex;
+    gap: 0.15rem;
+    align-items: center
+}
+
+.rating .bi-star-fill {
+    color: #f6c84c
+}
+
+/* -------------------------
+   Offcanvas cart
+   ------------------------- */
+.offcanvas .cart-item {
+    display: flex;
+    gap: 0.75rem;
+    align-items: center;
+    padding: 0.5rem 0.25rem;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.04)
+}
+
+.offcanvas .cart-item img {
+    width: 64px;
+    height: 64px;
+    object-fit: cover;
+    border-radius: 8px
+}
+
+.offcanvas-footer {
+    background: #fff
+}
+
+/* -------------------------
+   Quick view modal
+   ------------------------- */
+.quickview-gallery {
+    display: flex;
+    gap: 0.75rem
+}
+
+.quickview-gallery .main-img {
+    flex: 1;
+    min-height: 320px;
+    border-radius: 8px;
+    overflow: hidden
+}
+
+.quickview-gallery .thumbs {
+    width: 120px;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem
+}
+
+.quickview-gallery .thumbs img {
+    width: 100%;
+    height: 72px;
+    object-fit: cover;
+    border-radius: 6px;
+    cursor: pointer
+}
+
+/* -------------------------
+   Footer
+   ------------------------- */
+footer small a {
+    color: #ffffff;
+    text-decoration: underline;
+    opacity: 0.9
+}
+
+footer small a:hover {
+    opacity: 1
+}
+
+/* -------------------------
+   Responsive helpers for desktop-only elements
+   ------------------------- */
+@media(min-width:992px) {
+    .navbar .form-control {
+        min-width: 420px
+    }
+
+    #hero .carousel-inner {
+        height: 520px
+    }
+
+    #hero .carousel-item img {
+        height: 520px
+    }
+
+    .category-tile {
+        height: 220px
+    }
+}
+
+/* Category Page */
+/* styles.css */
+/* Category-page additions / overrides
+   Add these to css/styles.css (appended) or save as css/category.css and include in category.html
+*/
+
+/* Filters card tweaks */
+aside .card {
+    padding: 1rem;
+    background: linear-gradient(180deg, #ffffff, #fbfbfd);
+}
+
+.filter__group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: #3b3b3b;
+}
+
+.filter__group .form-check {
+    margin: 0.15rem 0;
+}
+
+/* Color swatch hover + selected state */
+.filter__group .btn[aria-pressed="true"],
+.filter__group .btn.active {
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+    transform: translateY(-2px);
+    border: 2px solid rgba(0, 0, 0, 0.06);
+}
+
+/* Make pagination more refined */
+.pagination .page-item .page-link {
+    border-radius: 8px;
+    min-width: 42px;
+    text-align: center;
+}
+
+.page-item.active .page-link {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #fff;
+}
+
+/* Mobile offcanvas filter content tweaks */
+.offcanvas .card {
+    box-shadow: none;
+    border-radius: 10px;
+}
+
+.offcanvas .card .filter__group {
+    margin-bottom: 1rem;
+}
+
+/* Product card adjustments for category grid */
+#categoryGrid .pcard {
+    height: 100%;
+}
+
+#categoryGrid .pcard__title {
+    min-height: 3rem;
+}
+
+/* Small helper for empty state */
+.alert-info {
+    background: linear-gradient(90deg, #f7fbff, #f3f7ff);
+    border-color: rgba(0, 102, 255, 0.06);
+    color: #073763;
+}
+
+
+/* styles.css */
+/* Product-page additions — append to css/styles.css
+   - Gallery layout, thumbs, zoom lens polish, related carousel horizontal cards,
+     and minor UI refinements for product details page.
+*/
+
+/* Gallery */
+#prodGallery {
+    gap: 1rem;
+    align-items: flex-start;
+}
+
+#prodThumbs {
+    width: 88px;
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+}
+
+#prodThumbs button {
+    border: 0;
+    background: transparent;
+    padding: 0;
+    cursor: pointer;
+}
+
+#prodThumbs img {
+    width: 88px;
+    height: 88px;
+    object-fit: cover;
+    border-radius: 8px;
+    transition: transform var(--transition);
+}
+
+#prodThumbs button:focus img,
+#prodThumbs button:hover img {
+    transform: scale(1.03);
+    outline: 3px solid rgba(0, 102, 255, 0.12);
+    outline-offset: 2px;
+}
+
+/* Main image wrapper */
+#zoomWrapper {
+    position: relative;
+    overflow: hidden;
+    border-radius: 12px;
+    background: #f8fafc;
+}
+
+#zoomWrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    transition: transform 220ms ease;
+}
+
+/* Zoom lens style improved */
+#zoomWrapper .zoom-lens {
+    position: absolute;
+    pointer-events: none;
+    border-radius: 8px;
+    border: 2px solid rgba(255, 255, 255, 0.7);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+    width: 140px;
+    height: 140px;
+    display: none;
+}
+
+/* product info panel */
+#variantSelectors .btn.active {
+    border-color: var(--accent);
+    box-shadow: 0 6px 18px rgba(0, 102, 255, 0.08);
+}
+
+#prodPrice {
+    font-size: 1.5rem;
+}
+
+#prodMrp {
+    font-size: 0.95rem;
+    color: var(--muted);
+}
+
+/* Related products horizontal scroller */
+#relatedProducts {
+    display: flex;
+    overflow-x: auto;
+    padding-bottom: 8px;
+    scrollbar-width: thin;
+    gap: 1rem;
+}
+
+#relatedProducts .pcard {
+    min-width: 220px;
+    max-width: 220px;
+    flex: 0 0 auto;
+}
+
+/* Reviews area */
+#prodReviews .mb-3 {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+    padding-bottom: 0.75rem;
+    margin-bottom: 0.75rem;
+}
+
+/* Small screens adjustments inside product page */
+@media (max-width: 767.98px) {
+    #prodGallery {
+        flex-direction: column;
+    }
+
+    #prodThumbs {
+        width: 100%;
+        flex-direction: row;
+        overflow: auto;
+        gap: 0.5rem;
+        padding-bottom: 0.5rem;
+    }
+
+    #prodThumbs img {
+        width: 72px;
+        height: 72px;
+        border-radius: 8px;
+    }
+
+    #zoomWrapper {
+        min-height: 280px;
+    }
+
+    #prodPrice {
+        font-size: 1.25rem;
+    }
+
+    #relatedProducts .pcard {
+        min-width: 160px;
+        max-width: 160px;
+    }
+}
+
+/* Accessibility: ensure contrast on small actionable text */
+small.text-muted {
+    color: rgba(27, 27, 27, 0.65);
+}
+
+/* styles.css */
+/* CART PAGE ADDITIONS — append to existing css/styles.css */
+
+/* ==============================
+   CART PAGE LUXURY STYLING
+   ============================== */
+
+main h2 {
+    font-size: 1.75rem;
+    letter-spacing: -0.3px;
+}
+
+#cartItemsList .border-bottom:last-child {
+    border-bottom: none !important;
+}
+
+/* Product item styling */
+#cartItemsList img {
+    border-radius: 12px;
+    transition: transform 0.25s ease;
+}
+
+#cartItemsList img:hover {
+    transform: scale(1.04);
+}
+
+#cartItemsList h6 {
+    color: #212529;
+    font-weight: 600;
+}
+
+#cartItemsList .qty-minus,
+#cartItemsList .qty-plus {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+#cartItemsList .qty-minus:hover,
+#cartItemsList .qty-plus:hover {
+    background-color: var(--accent);
+    color: #fff;
+    border-color: var(--accent);
+}
+
+/* Remove button hover */
+.remove-item {
+    opacity: 0.8;
+    transition: opacity 0.2s ease;
+}
+
+.remove-item:hover {
+    opacity: 1;
+    color: crimson !important;
+}
+
+/* Coupon input card */
+#couponInput {
+    border-radius: 30px;
+    padding: 0.75rem 1.2rem;
+    border: 1px solid #e5e7eb;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
+    transition: box-shadow 0.3s ease;
+}
+
+#couponInput:focus {
+    box-shadow: 0 0 0 4px rgba(0, 102, 255, 0.1);
+    border-color: var(--accent);
+}
+
+#applyCouponBtn {
+    border-radius: 30px;
+    font-weight: 500;
+    padding-inline: 1.5rem;
+    transition: transform 0.2s ease;
+}
+
+#applyCouponBtn:hover {
+    transform: translateY(-2px);
+}
+
+/* Summary card */
+aside .card {
+    background: linear-gradient(180deg, #ffffff, #fafbfc);
+    border-radius: 20px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.06);
+    transition: all 0.25s ease;
+}
+
+aside .card:hover {
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.09);
+}
+
+aside .btn {
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+}
+
+/* Empty state */
+#emptyCart img {
+    transition: transform 0.3s ease;
+}
+
+#emptyCart img:hover {
+    transform: scale(1.05);
+}
+
+#emptyCart h4 {
+    font-weight: 600;
+    margin-top: 0.5rem;
+}
+
+/* Smooth fade for feedback */
+#couponFeedback {
+    transition: opacity 0.3s ease;
+}
+
+/* Scrollbar minimal styling for cart items (if long) */
+#cartItemsList {
+    max-height: 80vh;
+    overflow-y: auto;
+    scrollbar-width: thin;
+}
+
+#cartItemsList::-webkit-scrollbar {
+    width: 6px;
+}
+
+#cartItemsList::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
+}
+
+
+/* Responsive tweaks for cart page */
+@media (max-width: 767.98px) {
+    aside .card {
+        margin-top: 1.5rem;
+    }
+}
+
+/* Responsive tweaks for cart page */
+@media (max-width: 575.98px) {
+    #cartItemsList .d-flex {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    #cartItemsList .flex-grow-1,
+    #cartItemsList .text-end {
+        margin-top: 0.75rem;
+    }
+
+    #cartItemsList .text-end {
+        text-align: center !important;
+    }
+}
+
+@media (max-width: 991.98px) and (min-width: 768px) {
+    #zoomWrapper img {
+        width: auto;
+        height: 100%;
+    }
+
+    #zoomWrapper .zoom-lens {
+        width: 96px;
+        height: 96px;
+    }
+
+    #zoomWrapper {
+        min-height: 400px;
+    }
+}
+
+@media (min-width: 992px) {
+    #zoomWrapper img {
+        width: auto;
+        height: 100%;
+    }
+
+    #zoomWrapper .zoom-lens {
+        width: 120px;
+        height: 120px;
+    }
+
+    #zoomWrapper {
+        min-height: 500px;
+    }
+}
+
+/* responsive.css */
+/* Product page specific responsive tweaks (append to css/responsive.css) */
+@media (min-width: 992px) {
+
+    /* Slightly larger thumbnails on wide screens */
+    #prodThumbs img {
+        width: 96px;
+        height: 96px;
+    }
+
+    #zoomWrapper {
+        min-height: 480px;
+    }
+}
+
+@media (max-width: 1199.98px) and (min-width: 768px) {
+    #zoomWrapper {
+        min-height: 380px;
+    }
+}
+
+
+/* styles.css */
+/* CHECKOUT PAGE ADDITIONS — append to css/styles.css
+   - Polished checkout cards, buttons, form focus, order-confirm visuals
+*/
+
+.checkout .card {
+    border-radius: 16px;
+    background: linear-gradient(180deg, #ffffff, #fbfdff);
+    box-shadow: 0 12px 30px rgba(8, 15, 52, 0.06);
+}
+
+.checkout h5 {
+    font-size: 1.05rem;
+}
+
+.checkout .form-control:focus {
+    box-shadow: 0 6px 24px rgba(0, 102, 255, 0.08);
+    border-color: var(--accent);
+}
+
+.checkout .btn-primary {
+    background: var(--accent);
+    border: 0;
+    box-shadow: 0 8px 20px rgba(0, 102, 255, 0.08);
+}
+
+.checkout .btn-primary:hover {
+    transform: translateY(-2px);
+}
+
+/* Order confirmation */
+#orderConfirm {
+    max-width: 720px;
+    margin: 2rem auto;
+}
+
+#orderConfirm img {
+    box-shadow: 0 10px 30px rgba(2, 6, 23, 0.08);
+}
+
+/* Small helper text */
+.small.text-muted {
+    color: rgba(27, 27, 27, 0.6);
+}
+
+/* Accessibility: focus visible for inputs and buttons */
+input:focus,
+button:focus,
+select:focus,
+textarea:focus {
+    outline-offset: 3px;
+}
+
+/* Sticky aside refinement */
+aside .card.position-sticky {
+    top: 110px;
+}
+
+/* styles.css */
+/* ACCOUNT PAGE ADDITIONS — append to css/styles.css */
+
+/* ===============================
+   ACCOUNT DASHBOARD STYLING
+   =============================== */
+
+.account-page h2 {
+    font-size: 1.8rem;
+    letter-spacing: -0.3px;
+    font-weight: 600;
+    color: #111827;
+}
+
+.list-group-item {
+    font-weight: 500;
+    border: 0;
+    padding: 0.9rem 1.25rem;
+    transition: all 0.25s ease;
+    color: #374151;
+}
+
+.list-group-item.active {
+    background: var(--accent);
+    color: #fff;
+    border-radius: 0;
+    box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.1);
+}
+
+.list-group-item:hover:not(.active) {
+    background: rgba(0, 102, 255, 0.06);
+    color: var(--accent);
+}
+
+/* Account sections (Profile, Orders, etc.) */
+.account-section {
+    border-radius: 16px;
+    background: linear-gradient(180deg, #ffffff, #f8fafc);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+}
+
+.account-section:hover {
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.07);
+}
+
+.account-section h5 {
+    color: #0b1220;
+    font-weight: 600;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    padding-bottom: 0.75rem;
+}
+
+/* Profile form */
+#profileForm .form-control {
+    border-radius: 12px;
+    border: 1px solid #e5e7eb;
+    transition: all 0.25s ease;
+}
+
+#profileForm .form-control:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(0, 102, 255, 0.1);
+}
+
+#logoutBtn {
+    border-width: 2px;
+    font-weight: 500;
+}
+
+#logoutBtn:hover {
+    background: crimson;
+    color: #fff;
+}
+
+/* Orders section */
+#ordersList .border {
+    border-color: #e5e7eb !important;
+    transition: transform 0.2s ease;
+}
+
+#ordersList .border:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
+}
+
+#ordersList .badge {
+    font-size: 0.75rem;
+    padding: 0.35rem 0.6rem;
+    letter-spacing: 0.2px;
+}
+
+/* Addresses */
+#addressList .border {
+    background: #fff;
+    transition: box-shadow 0.25s ease;
+}
+
+#addressList .border:hover {
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+}
+
+#addressList button.remove {
+    border: 0;
+    background: rgba(220, 53, 69, 0.1);
+    color: crimson;
+    transition: all 0.25s ease;
+}
+
+#addressList button.remove:hover {
+    background: crimson;
+    color: #fff;
+}
+
+/* Wishlist */
+#wishlistItems article {
+    background: #fff;
+    border: 1px solid #f1f5f9;
+    transition: all 0.3s ease;
+}
+
+#wishlistItems article:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+}
+
+#wishlistItems .btn-outline-danger {
+    border-radius: 20px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+#wishlistItems .btn-outline-danger:hover {
+    background: crimson;
+    color: #fff;
+}
+
+/* Toast */
+body .toast-lite {
+    position: fixed;
+    bottom: 1rem;
+    right: 1rem;
+    background: #0b1220;
+    color: #fff;
+    border-radius: 12px;
+    padding: 0.75rem 1.25rem;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    animation: fadeInOut 1.8s ease forwards;
+    z-index: 1055;
+}
+
+@keyframes fadeInOut {
+    0% {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    10%,
+    90% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    100% {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+}
+
+/* Buttons */
+.btn-primary {
+    border-radius: 30px;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+}
+
+.btn-outline-danger {
+    border-radius: 30px;
+    font-weight: 500;
+}
+
+/* Scrollbar minimal */
+.account-page::-webkit-scrollbar {
+    width: 6px;
+}
+
+.account-page::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
+}
+
+/* styles.css */
+/* SEARCH PAGE ADDITIONS — append to css/styles.css */
+
+/* ==============================
+   SEARCH RESULTS STYLING
+   ============================== */
+
+main h2 {
+    font-size: 1.7rem;
+    color: #111827;
+}
+
+#searchTerm {
+    font-weight: 600;
+}
+
+/* Sorting select */
+#sortSelect {
+    border-radius: 30px;
+    font-weight: 500;
+    border: 1px solid #e5e7eb;
+    background-color: #fff;
+    transition: all 0.25s ease;
+}
+
+#sortSelect:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(0, 102, 255, 0.1);
+}
+
+/* Product grid */
+#resultsGrid .col-md-3 {
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+#resultsGrid .col-md-3:hover {
+    transform: translateY(-4px);
+}
+
+/* Product card base */
+.pcard {
+    border: 1px solid #f1f5f9;
+    border-radius: 16px;
+    background: linear-gradient(180deg, #ffffff, #fafbfc);
+    overflow: hidden;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.pcard:hover {
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.06);
+    transform: translateY(-3px);
+}
+
+.pcard__img img {
+    border-bottom: 1px solid #f1f5f9;
+    transition: transform 0.3s ease;
+}
+
+.pcard:hover .pcard__img img {
+    transform: scale(1.05);
+}
+
+.pcard__badge {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: var(--accent);
+    color: #fff;
+    font-size: 0.7rem;
+    padding: 4px 8px;
+    border-radius: 6px;
+    font-weight: 600;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+}
+
+.pcard__brand {
+    font-size: 0.8rem;
+    color: #6b7280;
+}
+
+.pcard .text-primary {
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+/* Load more button */
+#loadMoreBtn {
+    border-radius: 25px;
+    font-weight: 500;
+    padding-inline: 2rem;
+    transition: all 0.25s ease;
+}
+
+#loadMoreBtn:hover {
+    background: var(--accent);
+    color: #fff;
+    transform: translateY(-2px);
+}
+
+/* Offcanvas filter */
+#filterCanvas .offcanvas-body {
+    background: #f8fafc;
+    border-top: 1px solid #e5e7eb;
+    border-radius: 0 20px 20px 0;
+}
+
+#filterCanvas h6 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #111827;
+}
+
+#filterCanvas .form-range::-webkit-slider-thumb {
+    background: var(--accent);
+}
+
+#filterCanvas .form-check-input:checked {
+    background-color: var(--accent);
+    border-color: var(--accent);
+}
+
+/* Empty results */
+#resultsGrid p {
+    font-size: 1rem;
+    color: #6b7280;
+}
+
+/* Mobile filter button */
+.btn-outline-secondary[data-bs-target="#filterCanvas"] {
+    border-radius: 30px;
+    font-weight: 500;
+    transition: all 0.25s ease;
+}
+
+.btn-outline-secondary[data-bs-target="#filterCanvas"]:hover {
+    background: var(--accent);
+    color: #fff;
+}
+
+/* Responsive pagination */
+#resultsGrid {
+    min-height: 300px;
+    transition: opacity 0.25s ease;
+}

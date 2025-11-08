@@ -1,0 +1,241 @@
+<!-- search.html -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ShopEase — Search Results</title>
+    <meta name="description" content="Browse products matching your search on ShopEase.">
+
+    <!-- Bootstrap & Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Shared CSS -->
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/responsive.css">
+</head>
+
+<body>
+    <!-- NAVBAR -->
+    <header class="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top">
+        <div class="container py-2">
+            <a class="navbar-brand fw-bold fs-3" href="index.html">ShopEase</a>
+
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSearch" aria-controls="navbarSearch" aria-expanded="false">
+                <i class="bi bi-list fs-2"></i>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSearch">
+                <form class="d-flex mx-auto" role="search" action="search.html">
+                    <input class="form-control rounded-pill me-2" type="search" name="q" id="searchInput"
+                        placeholder="Search products..." aria-label="Search">
+                    <button class="btn btn-primary rounded-pill px-4" type="submit"><i
+                            class="bi bi-search"></i></button>
+                </form>
+                <ul class="navbar-nav ms-auto align-items-center">
+                    <li class="nav-item"><a href="account.html" class="nav-link"><i
+                                class="bi bi-person-circle me-1"></i>Account</a></li>
+                    <li class="nav-item">
+                        <button class="btn nav-link position-relative" data-bs-toggle="offcanvas"
+                            data-bs-target="#cartDrawer">
+                            <i class="bi bi-cart3 fs-5"></i>
+                            <span
+                                class="cart-count badge bg-danger position-absolute top-0 start-100 translate-middle">0</span>
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </header>
+
+    <!-- MAIN SEARCH RESULTS -->
+    <main class="container my-5">
+        <div class="d-flex flex-wrap align-items-center justify-content-between mb-4">
+            <h2 class="fw-semibold mb-0">Search Results for <span id="searchTerm" class="text-primary"></span></h2>
+            <div class="d-flex align-items-center gap-2 mt-3 mt-md-0">
+                <select class="form-select rounded-pill" id="sortSelect" style="width:200px;">
+                    <option value="relevance">Sort by: Relevance</option>
+                    <option value="priceLow">Price: Low to High</option>
+                    <option value="priceHigh">Price: High to Low</option>
+                    <option value="newest">Newest First</option>
+                </select>
+                <button class="btn btn-outline-secondary d-lg-none rounded-pill" data-bs-toggle="offcanvas"
+                    data-bs-target="#filterCanvas">
+                    <i class="bi bi-funnel"></i> Filters
+                </button>
+            </div>
+        </div>
+
+        <!-- Results grid -->
+        <div class="row g-4" id="resultsGrid"></div>
+
+        <!-- Load more -->
+        <div class="text-center mt-4">
+            <button class="btn btn-outline-primary rounded-pill px-4" id="loadMoreBtn">Load More</button>
+        </div>
+    </main>
+
+    <!-- FILTER OFFCANVAS (Mobile) -->
+    <div class="offcanvas offcanvas-start" tabindex="-1" id="filterCanvas" aria-labelledby="filterCanvasLabel">
+        <div class="offcanvas-header">
+            <h5 id="filterCanvasLabel"><i class="bi bi-funnel me-2"></i>Filters</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+        </div>
+        <div class="offcanvas-body">
+            <div class="mb-3">
+                <h6 class="fw-semibold">Price Range</h6>
+                <input type="range" class="form-range" min="0" max="5000" id="priceFilter">
+                <div class="d-flex justify-content-between small text-muted">
+                    <span>₹0</span><span>₹5000+</span>
+                </div>
+            </div>
+            <div class="mb-3">
+                <h6 class="fw-semibold">Brand</h6>
+                <div id="brandFilters" class="vstack gap-1 small"></div>
+            </div>
+            <button class="btn btn-primary w-100 rounded-pill" id="applyFiltersBtn">Apply Filters</button>
+        </div>
+    </div>
+
+    <!-- OFFCANVAS CART -->
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="cartDrawer">
+        <div class="offcanvas-header border-bottom">
+            <h5>Your Cart</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+        </div>
+        <div class="offcanvas-body" id="cartItemsContainer">
+            <p class="text-muted small">Your cart is empty.</p>
+        </div>
+        <div class="offcanvas-footer border-top p-3">
+            <div class="d-flex justify-content-between mb-3">
+                <span class="fw-semibold">Total:</span>
+                <span class="fw-bold" id="cartTotal">₹0</span>
+            </div>
+            <a href="cart.html" class="btn btn-primary w-100 rounded-pill">Go to Cart</a>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="bg-dark text-light py-4 mt-5">
+        <div class="container text-center small">
+            <p class="mb-1">&copy; 2025 ShopEase — All rights reserved.</p>
+            <p class="mb-0">Images: Unsplash — credited in data.js.</p>
+        </div>
+    </footer>
+
+    <!-- SCRIPTS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/data.js"></script>
+    <script src="js/script.js"></script>
+
+    <!-- Page-specific JS -->
+    <script>
+        (function () {
+            'use strict';
+            const params = new URLSearchParams(window.location.search);
+            const query = (params.get('q') || '').trim().toLowerCase();
+            const products = window.products || [];
+            const resultsGrid = document.getElementById('resultsGrid');
+            const searchTermEl = document.getElementById('searchTerm');
+            const loadMoreBtn = document.getElementById('loadMoreBtn');
+            const sortSelect = document.getElementById('sortSelect');
+            const priceFilter = document.getElementById('priceFilter');
+            const brandFilters = document.getElementById('brandFilters');
+            const applyFiltersBtn = document.getElementById('applyFiltersBtn');
+
+            let filtered = [];
+            let visibleCount = 8;
+
+            searchTermEl.textContent = `"${query}"`;
+
+            // Populate brand filters
+            const uniqueBrands = [...new Set(products.map(p => p.brand).filter(Boolean))];
+            brandFilters.innerHTML = uniqueBrands.map(b => `
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" value="${b}" id="brand-${b}">
+          <label class="form-check-label" for="brand-${b}">${b}</label>
+        </div>`).join('');
+
+            // Filter + search logic
+            function filterProducts() {
+                const maxPrice = parseInt(priceFilter.value || 5000);
+                const selectedBrands = Array.from(document.querySelectorAll('#brandFilters input:checked')).map(b => b.value);
+
+                filtered = products.filter(p => {
+                    const matchesQuery = p.title.toLowerCase().includes(query) || p.description.toLowerCase().includes(query);
+                    const matchesPrice = p.price <= maxPrice;
+                    const matchesBrand = selectedBrands.length ? selectedBrands.includes(p.brand) : true;
+                    return matchesQuery && matchesPrice && matchesBrand;
+                });
+
+                applySort();
+                renderResults();
+            }
+
+            function applySort() {
+                const sortVal = sortSelect.value;
+                if (sortVal === 'priceLow') filtered.sort((a, b) => a.price - b.price);
+                if (sortVal === 'priceHigh') filtered.sort((a, b) => b.price - a.price);
+                if (sortVal === 'newest') filtered.sort((a, b) => b.id - a.id);
+            }
+
+            function renderResults() {
+                resultsGrid.innerHTML = '';
+                if (!filtered.length) {
+                    resultsGrid.innerHTML = `<p class="text-muted text-center">No products found matching your search.</p>`;
+                    loadMoreBtn.classList.add('d-none');
+                    return;
+                }
+
+                filtered.slice(0, visibleCount).forEach(p => {
+                    const col = document.createElement('div');
+                    col.className = 'col-md-3 col-sm-6';
+                    col.innerHTML = `
+            <article class="pcard shadow-sm rounded-4 overflow-hidden">
+              <div class="pcard__img" style="aspect-ratio:1/1;position:relative;">
+                <img src="${p.images?.[0]}" alt="${p.title}" class="w-100 h-100" style="object-fit:cover;">
+                ${p.discount ? `<span class="pcard__badge">${p.discount}% OFF</span>` : ''}
+              </div>
+              <div class="p-3">
+                <div class="pcard__brand small text-muted">${p.brand || ''}</div>
+                <div class="fw-semibold mb-1">${p.title}</div>
+                <div class="d-flex align-items-baseline gap-2">
+                  <div class="text-primary fw-bold">₹${p.price}</div>
+                  ${p.mrp ? `<small class="text-muted text-decoration-line-through">₹${p.mrp}</small>` : ''}
+                </div>
+              </div>
+            </article>`;
+                    col.addEventListener('click', () => window.location.href = `product.html?id=${p.id}`);
+                    resultsGrid.appendChild(col);
+                });
+
+                if (visibleCount >= filtered.length) loadMoreBtn.classList.add('d-none');
+                else loadMoreBtn.classList.remove('d-none');
+            }
+
+            loadMoreBtn.addEventListener('click', () => {
+                visibleCount += 8;
+                renderResults();
+            });
+
+            sortSelect.addEventListener('change', () => { applySort(); renderResults(); });
+            applyFiltersBtn.addEventListener('click', () => filterProducts());
+
+            // Initial render
+            filterProducts();
+
+            // Prefill search input
+            document.getElementById('searchInput').value = query;
+
+            if (window.ShopApp && window.ShopApp.updateCartUI) window.ShopApp.updateCartUI();
+        })();
+    </script>
+</body>
+
+</html>
